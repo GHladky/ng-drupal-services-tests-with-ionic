@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <!-- compiled css output -->
+    <link href="css/ionic.app.css" rel="stylesheet">
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <!-- angularjs modules js -->
+    <script src="lib/angular-cookie/angular-cookie.min.js"></script>
+    <script src="lib/angular-messages/angular-messages.min.js"></script> 
+  
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- your app's js -->
+    <script src="app/app.js"></script>
+    <script src="app/app-controllers.js"></script>
+    
+    <!-- ng-drupal-ionic -->
+    <script src="lib/ng-drupal-ionic/lib/resources/baseResource.js"></script>
+    <script src="lib/ng-drupal-ionic/lib/resources/userResource.js"></script>
+    <script src="lib/ng-drupal-ionic/lib/resources/nodeResource.js"></script>
+    <script src="lib/ng-drupal-ionic/lib/resources/taxonomyTermResource.js"></script>
+    <script src="lib/ng-drupal-ionic/lib/resources/taxonomyVocabularyResource.js"></script>
+    <script src="lib/ng-drupal-ionic/lib/resources/commentResource.js"></script>
+    <script src="lib/ng-drupal-ionic/lib/resources/fileResource.js"></script>
+    <script src="lib/ng-drupal-ionic/lib/resources/viewsResource.js"></script>
+    <script src="lib/ng-drupal-ionic/lib/resources/apiAuthService.js"></script>
+    
+    <script src="lib/ng-drupal-ionic/lib/common/drupalApiConfig.js"></script>
+    <script src="lib/ng-drupal-ionic/lib/common/local-storage-service.js"></script>
+    <script src="lib/ng-drupal-ionic/lib/common/access-control.js"></script>
+
+
+    <!-- resources tests js -->
+    <script src="app/components/resources-tabs/comment-resource/comment-resource-controllers.js"></script>
+    <script src="app/components/resources-tabs/taxonomy-vocabulary-resource/taxonomy-vocabulary-resource-controllers.js"></script>
+    <script src="app/components/resources-tabs/taxonomy-term-resource/taxonomy-term-resource-controllers.js"></script>
+    <script src="app/components/resources-tabs/file-resource/file-resource-controllers.js"></script>
+    <script src="app/components/resources-tabs/node-resource/node-resource-controllers.js"></script>
+    <script src="app/components/resources-tabs/views-resource/views-resource-controllers.js"></script>
+    <script src="app/components/resources-tabs/user-resource/user-resource-controllers.js"></script>
+    <script src="app/components/resources-tabs/system-resource/system-resource-controllers.js"></script>
+
+
+  </head>
+
+  <body ng-app="ngDrupalIonicTests">
+  <ion-nav-view></ion-nav-view>
+</body>
+</html>
