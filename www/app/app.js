@@ -13,6 +13,7 @@ var drupalIonicAngularJSAPIClient = angular.module('ngDrupalIonicTests', [
   'common.services.localstorage',
   'ApiAuthModules',
   
+  'resources.menu-resource.controllers',
   'resources.comment-resource.controllers',
   'resources.taxonomy-vocabulary-resource.controllers',
   'resources.taxonomy-term-resource.controllers',
@@ -77,6 +78,19 @@ drupalIonicAngularJSAPIClient
 			    }
 		   })
 		  
+		   //
+		  //Menu Resource
+		  //______________________________________________
+		  .state('app.resources-tabs.menu-resource', {
+		  url: '/menu-recource',
+		  views: {
+			      'menu-resource': {
+			    	templateUrl: 'app/components/resources-tabs/menu-resource/menu-resource.html',
+			  		controller:  'ResourcesMenuResourceCtrl' 
+			      }
+			    }
+		   })
+		   
 		  //
 		  //Taxonomy Vocabulary Resource
 		  //______________________________________________

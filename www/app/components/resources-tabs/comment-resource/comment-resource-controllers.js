@@ -76,7 +76,6 @@ anonCommentResourceControllers.controller('ResourcesCommentResourceCtrl',
 				   																'filename' 	: 'finename.jpg'});
 			  */
 			   $scope.commentCreate.field_image =  BaseResource.structureField({'fid' : 2531});
-			   console.log( $scope.commentCreate.body); 
 			  
 			   $scope.callCommentRecourceCreate = function(comment) {
 				   requestStart = Date.now();
@@ -253,7 +252,6 @@ anonCommentResourceControllers.controller('ResourcesCommentResourceCtrl',
 					   $scope.commentCountNew = {};
 					   $scope.commentCountNew.nid = 707;
 					   $scope.commentCountNew.since = (currentDate.getTime()/1000).toFixed(0)- 60*60*24 ;
-					   console.log(  $scope.commentCountNew.since); 
 					   $scope.callCommentResourceCountNew = function(commentCountNew) {
 						   
 						   requestStart = Date.now();
