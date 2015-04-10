@@ -1,0 +1,45 @@
+<ion-view title="Menu Resource"> 
+
+<ion-content>
+
+<h1>SearchNodeResource</h1>
+
+<h2>Retrieve</h2>
+<ion-list>
+  <div ng-repeat="(key,request) in searchNodeRetrieveRequests">
+    <ion-item class="item-stable"
+              ng-click="toggleRequest(key)"
+              ng-class="{active: isRequestShown(key)}">
+        <i class="icon" ng-class="isRequestShown(key) ? 'ion-minus' : 'ion-plus'"></i>
+      &nbsp;
+      Retrieve Request {{key}} at {{request.requestStart | date}}
+    </ion-item>
+    <ion-item class="item-accordion item-icon-right"
+              ng-repeat="(name, value) in request"
+              ng-show="isRequestShown(key)">
+      <h2>{{name}}</h2>
+	  <p ng-show="name != 'data'">{{value}}</p>
+
+	  <pre ng-show="name == 'data'">
+	  {{ request.data | json}}
+	  </pre>
+    </ion-item>
+  </div>
+</ion-list>
+
+<label class="item item-input">
+<input type="text" ng-model="searchNodeRetrieve.keys" placeholder="keys" >
+</label>
+<ion-checkbox ng-model="searchNodeRetrieve.simple" ng-true-value="1" ng-false-value="0" >simple</ion-checkbox>
+<p><b>Fields:</b><br>
+Fields of node that are returned
+</p>
+<ion-checkbox ng-model="searchNodeRetrieve.fields.nid">fields.nid</ion-checkbox>
+<ion-checkbox ng-model="searchNodeRetrieve.fields.created">fields.created</ion-checkbox>
+<ion-checkbox ng-model="searchNodeRetrieve.fields.type">fields.type</ion-checkbox>
+<ion-checkbox ng-model="searchNodeRetrieve.fields.title">fields.title</ion-checkbox>
+
+<button class="button button-small" ng-click="callSearchNodeRecourceRetrieve(searchNodeRetrieve)">call searchNodeRecource.retrieve</button>
+<hr />
+
+</ion-content> </ion-view>

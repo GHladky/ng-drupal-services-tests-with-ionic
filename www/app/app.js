@@ -13,6 +13,7 @@ var drupalIonicAngularJSAPIClient = angular.module('ngDrupalIonicTests', [
   'common.services.localstorage',
   'ApiAuthModules',
   
+  'resources.search-node-resource.controllers',
   'resources.menu-resource.controllers',
   'resources.comment-resource.controllers',
   'resources.taxonomy-vocabulary-resource.controllers',
@@ -77,8 +78,22 @@ drupalIonicAngularJSAPIClient
 			      }
 			    }
 		   })
+		   
+		  //
+		  //Search Node Resource
+		  //______________________________________________
+		  .state('app.resources-tabs.search-node-resource', {
+		  url: '/search-node-recource',
+		  views: {
+			      'search-node-resource': {
+			    	templateUrl: 'app/components/resources-tabs/search-node-resource/search-node-resource.html',
+			  		controller:  'ResourcesSearchNodeResourceCtrl' 
+			      }
+			    }
+		   })
+		   
 		  
-		   //
+		  //
 		  //Menu Resource
 		  //______________________________________________
 		  .state('app.resources-tabs.menu-resource', {
