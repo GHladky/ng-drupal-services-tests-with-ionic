@@ -31,6 +31,7 @@ drupalIonicAngularJSAPIClient
      function (  $stateProvider,   $urlRouterProvider,   $httpProvider,    drupalApiConfig ) {
 		
 		//edit drupal config
+		drupalApiConfig.drupal_instance = 'http://www.drupalionic.org/backend/';
 		drupalApiConfig.api_endpoint += 'v1/';
 		
 		//
