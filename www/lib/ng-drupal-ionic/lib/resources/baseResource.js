@@ -40,11 +40,11 @@ drupalBaseModules.factory('BaseResource', ['BaseResourceConfig',  function(baseR
 		} else { return false; }
 		
 		//validate values
-		if(values) { 
-			values = (values || values === 0)?values:false;
-			if(values === false) {return false;}
-			else if (Object.getOwnPropertyNames(values).length <= 0 && parseInt(values) === NaN) { return false; }
-		} else { return false; }
+		values = (values || values === 0)?values:false;
+		
+		//validate values
+		if(values === false) {return false;}
+		else if (Object.getOwnPropertyNames(values).length <= 0 && parseInt(values) === NaN) { return false; }
 		
 		 
 		//normal param
@@ -178,6 +178,88 @@ drupalBaseModules.factory('BaseResource', ['BaseResourceConfig',  function(baseR
 	  }
 	  return str.join("&");
 	}
+	
+	
+	//merge new items to stored list by over nid
+	var mergeItemsIntoList = function(newItems, currentItems) {
+		   var uniqueNodes = [];
+ 			
+ 			angular.forEach(newItems, function(newItem) {
+ 				isUnique = true;
+ 				angular.forEach(currentItems, function(currentItems, nid) {
+ 					if(newItem.nid == currentItems.nid) { isUnique = false; }
+ 				}, isUnique);
+ 				 
+ 				if(isUnique) {
+ 					currentItems[newItem.nid] = newItem;
+ 					uniqueNodes[newItem.nid] = newItem;
+ 				}	
+ 			}, uniqueNodes);
+ 			
+ 			return uniqueNodes.concat(currentItems);
+	};
+	
+	//loads recent meetings and adds to meetings array
+	var loadRecent = function(rangeOptions, requestOptions, itemList) {
+		var defer = $q.defer();
+		var result = { 	rangeOptions 	: rangeOptions,
+						requestOptions	: requestOptions,
+						itemList		: itemList
+		};
+		
+		if(result.rangeOptions.pageFirst > 0) { result.rangeOptions.pageFirst = 0 }
+		result.requestOptions.page =  result.rangeOptions.pageFirst;
+		
+		ViewsResource.retrieve(meetingViewName, result.requestOptions).then(
+		    		//success
+		    		function(newItems) { 
+		    			result.itemList = mergeItemsIntoList(newItems, result.itemList);
+		    			defer.resolve(result);
+		    		},
+		    		//error
+		    		function(error) { 
+		    			result.error = error;
+		    			defer.reject(result);
+	 				}
+		);
+		return defer.promise;
+	}
+	
+	//loads meetings and adds to meetings array
+	var loadMore = function() {
+		var defer = $q.defer();
+		if(maxPage === undefined) {
+		   pageLast++,
+		   viewsOptions.page =  pageLast;
+		   
+		   ViewsResource.retrieve(meetingViewName, viewsOptions).then(
+		    		//success
+		    		function(newNodes) { 
+		    			if(newNodes.length != 0) {
+		    				mergeNodes(newNodes);
+		    			} 
+		    			else {
+		    				viewsOptions.page--;
+		    				pageLast = viewsOptions.page;
+		    				maxPage  = viewsOptions.page;
+		    			}
+	    				defer.resolve(meetings);
+		    		},
+		    		//error
+		    		function(error) { 
+		    			defer.reject(error);
+		    		}
+		   );
+	   } 
+	   //no more nodes to load
+	   else {
+		  defer.resolve(meetings);
+	   }
+	   return defer.promise;
+	}
+	
+	
+	
 
 	return {
 		prepareAndSetGetParam : prepareAndSetGetParam,

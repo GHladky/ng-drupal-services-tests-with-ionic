@@ -10,9 +10,10 @@ var drupalIonicAngularJSAPIClient = angular.module('ngDrupalIonicTests', [
   'drupal.configurations',
   'app.controllers',
   'common.accesss-control',
-  'common.services.localstorage',
+  'common.localstorage',
   'ApiAuthModules',
   
+  'resources.entity-node-resource.controllers',
   'resources.search-node-resource.controllers',
   'resources.menu-resource.controllers',
   'resources.comment-resource.controllers',
@@ -66,6 +67,29 @@ drupalIonicAngularJSAPIClient
 			      }
 			    }
 		  })
+		  
+		  .state('app.login', {
+            url: '/login',
+            views: {
+              'menuContent': {
+                templateUrl: 'app/components/login/login.html',
+                controller: 'LoginCtrl'
+              }
+            }
+          })
+		  
+		  //
+		  //Entity Node Resource
+		  //______________________________________________
+		   .state('app.resources-tabs.entity-node-resource', {
+		    url: '/entity-node-recource',
+		    views: {
+			      'entity-node-resource': {
+			    	templateUrl: 'app/components/resources-tabs/entity-node-resource/entity-node-resource.html',
+			  		controller:  'ResourcesEntityNodeResourceCtrl' 
+			      }
+			    }
+		   })
 		  
 		  //
 		  //Comment Resource

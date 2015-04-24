@@ -1,7 +1,7 @@
 /**
  * Drupal Api authentication service
  */
-var ApiAuthModules = angular.module('ApiAuthModules', ['drupal.configurations', 'SystemResourceModules', 'UserResourceModules', 'ipCookie']);
+var ApiAuthModules = angular.module('ApiAuthModules', ['drupal.configurations', 'SystemResourceModules', 'UserResourceModules', 'common.localstorage', 'ipCookie']);
 
 
 //@TODO config provider
@@ -80,6 +80,7 @@ ApiAuthModules.run( ['$rootScope', 'UserResourceChannel', 'ApiAuthService', 'Api
 			ApiAuthService.storeSessionData(data);
 			ApiAuthService.setConnectionState(true);
 			ApiAuthService.setCurrentUser(data.user);
+			console.log('ASDF'); 
 		};
 		UserResourceChannel.onUserLoginConfirmed($rootScope, onUserLoginConfirmedHandler);
 		
@@ -243,25 +244,35 @@ ApiAuthModules.service('ApiAuthService', [ '$rootScope', 'drupalApiConfig', 'Api
 			refreshToken().then(
 					//initToken success
 					function(token) {	
-						
 						SystemResource.connect().then(
 								//SystemResource.connect success
 					            function (data) {
 					            	
 					              var user_id = data.user.uid;
 					              
+					              setLastConnectTime(Date.now());
+					              storeSessionData(data);
+					              
 					              if (user_id == 0) { 
 					            	  setConnectionState(false); 
+					            	  setCurrentUser(data.user);
+					            	  defer.resolve(data.user);
 					              }
 					              else {  
 					            	  setConnectionState(true);
+					            	  //we have to use UserResource.retrieve() to get full data of current user
+						              UserResource.retrieve(data.user.uid).then(
+						            		  function(user) {
+						            			  setCurrentUser(user);
+						            			  defer.resolve(user);
+						            		  },
+						            		  function(data) {
+						            			  console.log(); 
+						            			  defer.reject(data);
+						            		  }
+						              );
 					              }
-					             
-					              setLastConnectTime(Date.now());
-					              storeSessionData(data);
-				            	  setCurrentUser(data.user);
-					              
-					              defer.resolve(data);
+
 					            },
 					            //SystemResource.connect error
 					            function(data) {
@@ -271,12 +282,11 @@ ApiAuthModules.service('ApiAuthService', [ '$rootScope', 'drupalApiConfig', 'Api
 							);
 					},
 					//initToken error
-					function() {
-						defer.reject(data);
+					function(error) {
+						defer.reject(error);
 					}
 			);
-			
-			//check cookies
+		
 			return defer.promise;
 		};
 		
