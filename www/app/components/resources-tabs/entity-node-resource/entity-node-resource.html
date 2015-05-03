@@ -11,8 +11,8 @@
               ng-click="toggleRequest(key)"
               ng-class="{active: isRequestShown(key)}">
         <i class="icon" ng-class="isRequestShown(key) ? 'ion-minus' : 'ion-plus'"></i>
-      &nbsp;
-      Retrieve Request {{key}} at {{request.requestStart | date}}
+	    &nbsp;
+	    Retrieve Request {{key}} at {{request.requestStart | date}}
     </ion-item>
     <ion-item class="item-accordion"
               ng-repeat="(name, value) in request"
