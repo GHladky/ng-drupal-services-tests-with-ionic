@@ -53,15 +53,22 @@
     </ion-item>
   </div>
 </ion-list>
-<ion-select label="EntityNode Types" label-field="name"  name="'nodeTypes'" provider="nodeTypes" ng-model="nodeCreate.type"/></ion-select>
+<label class="item item-input">
+<input type="text" ng-model="nodeCreate.type" disabled >
+</label>
 <label class="item item-input">
 <input type="text" ng-model="nodeCreate.title" placeholder="EntityNode title" >
 </label>
-
+<!-- 
+<ion-checkbox ng-model="nodeCreate.field_boolean_field.und[value]" ng-true-value="1" ng-false-value="0" >fields.nid</ion-checkbox>
+<label class="item item-input">
+<input type="text" ng-model="nodeCreate.field_text_field.und[value]" 	placeholder="custom text here" >
+</label>
+ -->
 
 <button class="button button-small" ng-click="callEntityNodeRecourceCreate(nodeCreate)">call EntityNodeRecource.create</button>
 <hr />
-<h2>Update</h2>
+<h2>Update <span class="assertive">!</span></h2>
 <ion-list>
   <div ng-repeat="(key,request) in nodeUpdateRequests">
     <ion-item class="item-stable"
@@ -83,10 +90,10 @@
   </div>
 </ion-list>
 <label class="item item-input">
-<input type="text" ng-init="nodeUpdate.nid='1234'" ng-model="nodeUpdate.nid" placeholder="Nid" >
+<input type="text" ng-init="nodeUpdate.nid='21'" ng-model="nodeUpdate.nid" placeholder="Nid" >
 </label>
 <label class="item item-input">
-<input type="text" ng-init="nodeUpdate.title='test titel'" ng-model="nodeUpdate.title" placeholder="EntityNode title" >
+<input type="text" ng-init="nodeUpdate.title='updated titel'" ng-model="nodeUpdate.title" placeholder="EntityNode title" >
 </label>
 
 <button class="button button-small" ng-click="callEntityNodeRecourceUpdate(nodeUpdate)">call EntityNodeRecource.update</button>

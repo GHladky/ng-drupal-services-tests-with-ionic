@@ -69,11 +69,11 @@ anonEntityNodeResourceControllers.controller('ResourcesEntityNodeResourceCtrl',
 			   //get params for create request
 			   //NOTE: username is set automatically on server through authed request
 			   $scope.nodeCreate = {};
-			   $scope.nodeCreate.type = 'page'; 
+			   $scope.nodeCreate.type = 'custom_fields_test'; 
 			   $scope.nodeCreate.title = 'testtitle'; 
-			    
-			   console.log( $scope.nodeCreate.body); 
-			  
+			   $scope.nodeCreate.field_boolean_field = BaseResource.structureField( {'value' : 1 });
+			   $scope.nodeCreate.field_text_field = BaseResource.structureField( {'value' : "custom text" });
+			   
 			   $scope.callEntityNodeRecourceCreate = function(node) {
 				   requestStart = Date.now();
 				   EntityNodeResource.create(node).then(

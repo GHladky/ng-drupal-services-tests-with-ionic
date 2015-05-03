@@ -32,7 +32,7 @@ drupalIonicAngularJSAPIClient
      function (  $stateProvider,   $urlRouterProvider,   $httpProvider,    drupalApiConfig ) {
 		
 		//edit drupal config
-		drupalApiConfig.drupal_instance = 'http://www.drupalionic.org/backend/';
+		drupalApiConfig.drupal_instance = 'http://www.drupalionic.org/drupal_test/';
 		drupalApiConfig.api_endpoint += 'v1/';
 		
 		//
@@ -221,5 +221,51 @@ drupalIonicAngularJSAPIClient
   $urlRouterProvider.otherwise('/app/overview');
   
   
+}]);
+
+
+
+drupalIonicAngularJSAPIClient.run(['$rootScope', 'drupalApiConfig',  '$urlRouter',  '$ionicLoading', 'ApiAuthService', 'AccessControlService', '$state',
+                          function ($rootScope,   drupalApiConfig,    $urlRouter,    $ionicLoading,   ApiAuthService,   AccessControlService,   $state) {
+	
+     //http://angular-ui.github.io/ui-router/site/#/api/ui.router.router.$urlRouterProvider#methods_deferintercept
+     $rootScope.$on('$locationChangeSuccess', function(e) {
+   
+       	 	if ( ApiAuthService.getLastConnectTime() > ( Date.now() - drupalApiConfig.session_expiration_time ) || ApiAuthService.getLastConnectTime() > 0 ) {
+       	 		//sync the current URL to the router
+    	    	$urlRouter.sync();
+    	    	return;
+    	    }
+    	 
+    	    // Prevent $urlRouter's default handler from firing
+    	    e.preventDefault();
+    	    $rootScope.$broadcast('loading:show', { loading_settings : {template:"<p><ion-spinner></ion-spinner><br/>Connect with System...</p>"} });
+    	    // init or refresh Authentication service connection    
+    	    ApiAuthService.refreshConnection().then(
+    	    	function() {
+    	    		$rootScope.$broadcast('loading:hide');
+    	    		//sync the current URL to the router 
+    	    		$urlRouter.sync();
+    	    	},
+    	    	function() {
+    	    		$rootScope.$broadcast('loading:hide');
+    	    		//sync the current URL to the router 
+    	    		$urlRouter.sync();
+    	    	}
+    	    );
+    	 
+    	  // Configures $urlRouter's listener *after* your custom listener
+    	  $urlRouter.listen();
+	});
+    
+    //redirection logic end
+    $rootScope.$on('loading:show', function (event, args) {
+    	$ionicLoading.show((args && 'loading_settings' in args) ? args.loading_settings:{});
+    });
+      
+    $rootScope.$on('loading:hide', function (event, args) {
+        $ionicLoading.hide()
+    });
+      
 }]);
 

@@ -80,7 +80,6 @@ ApiAuthModules.run( ['$rootScope', 'UserResourceChannel', 'ApiAuthService', 'Api
 			ApiAuthService.storeSessionData(data);
 			ApiAuthService.setConnectionState(true);
 			ApiAuthService.setCurrentUser(data.user);
-			console.log('ASDF'); 
 		};
 		UserResourceChannel.onUserLoginConfirmed($rootScope, onUserLoginConfirmedHandler);
 		
