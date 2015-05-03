@@ -13,6 +13,7 @@ var drupalIonicAngularJSAPIClient = angular.module('ngDrupalIonicTests', [
   'common.localstorage',
   'ApiAuthModules',
   
+  'resources.entity-taxonomy-term-resource.controllers',
   'resources.entity-node-resource.controllers',
   'resources.search-node-resource.controllers',
   'resources.menu-resource.controllers',
@@ -77,6 +78,19 @@ drupalIonicAngularJSAPIClient
               }
             }
           })
+          
+          //
+		  //Entity Taxonomy Terms Resource
+		  //______________________________________________
+		  .state('app.resources-tabs.entity-taxonomy-term-resource', {
+		  url: '/entity-taxonomy-term-recource',
+		  views: {
+			      'entity-taxonomy-term-resource': {
+			    	templateUrl: 'app/components/resources-tabs/entity-taxonomy-term-resource/entity-taxonomy-term-resource.html',
+			  		controller:  'ResourcesEntityTaxonomyTermResourceCtrl' 
+			      }
+			    }
+		   })
 		  
 		  //
 		  //Entity Node Resource
